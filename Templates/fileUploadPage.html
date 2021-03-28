@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Page</title>
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/theme.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class='w3-text-theme'>
+    <div class='w3-theme w3-padding w3-xlarge'>
+        Send mass emails with attachments
+    </div>
+    <div class='w3-content w3-padding-32' style='max-width:600px'>
+        <center>
+            <form action="uploadExcel" method='post' enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class='w3-text-theme w3-large'> Upload Excel sheet </div>
+                <div class='w3-section'>
+                    <input type="file" name='excel_sheet' accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                </div>
+                <div class='w3-section'>
+                    <button class='w3-button kel-hover w3-round w3-theme w3-margin-top'>Upload</button>
+                </div>
+            </form>
+        </center>
+        
+    </div>
+</body>
+</html>

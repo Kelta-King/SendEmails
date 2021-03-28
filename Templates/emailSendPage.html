@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Page</title>
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/theme.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class='w3-text-theme'>
+    <div class='w3-theme w3-padding w3-xlarge'>
+        Send mass emails with attachments
+    </div>
+    <div class='w3-content w3-padding-32' style='max-width:600px'>
+        <hr style='border-bottom: 1px solid black;'>
+        <div id='selectEmailColumn' class='w3-padding-32'>
+            <div class='w3-padding'>
+                <label for="emailColumn" class='w3-padding w3-large'> Select Email column </label>
+                <div class='w3-bar'>
+                    <div class='w3-bar-item'>
+                        <input type="text" id='emailColumn' list='columnsVars' placeholder="Column name..." class='w3-input w3-border' style='width:300px'>
+                        <datalist id='columnsVars'>
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class='w3-bar-item'>
+                        <button class='w3-theme w3-button kel-hover w3-round'> <i class='fa fa-plus'></i> </button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class='w3-border w3-round w3-padding w3-margin' style='min-height: 100px;'>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
