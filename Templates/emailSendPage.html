@@ -12,6 +12,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class='w3-text-theme'>
+    <div id="loader-modal" class="w3-modal">
+        <div class="w3-modal-content" style="width:60px; height:50px; padding-top:5px">
+            <center>
+                <div class='loader'></div>
+            </center>
+        </div>
+    </div>
+
+    </div>
     <div class='w3-theme w3-padding w3-xlarge'>
         Send mass emails with attachments
     </div>
@@ -37,9 +46,7 @@
         </div>
         <hr style="border-bottom: 1px solid black;">
         <div class='w3-center w3-xlarge w3-text-theme'>Email Content</div>
-        <div id='content'>
-
-        </div>
+        <form id='content'>{% csrf_token %}</form>
         <div class='w3-padding-16'></div>
     </div>
     <script src="{% static 'Js/commen.js' %}"></script>

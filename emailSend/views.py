@@ -6,6 +6,7 @@ import pandas as pd
 import os
 import base64
 import json
+import re
 
 df_dataset = {
     'df': pd.DataFrame(),
@@ -24,7 +25,17 @@ class OverwriteStorage(FileSystemStorage):
         
         return name
 
-# Create your views here.
+def emailCheck(email):
+    
+    regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+    if(re.search(regex, email)):
+        print("Valid Email")
+        return True
+
+    else:
+        print("Invalid Email")
+        return False
+
 def homePage(request):
     return render(request, 'fileUploadPage.html')
 
@@ -80,12 +91,33 @@ def setEmailColumn(request):
         vals = request.GET.get('vals')
         vals = base64.b64decode(vals)
         
+        df = df_dataset['df']
+
         vals = json.loads(vals)
-        df_dataset['emailColumn'] = vals['column']
+        emailColumn = vals['column']
+
+        if not emailCheck(df[emailColumn][0]):
+            return HttpResponse("Error: Please provide proper emails in this colum")
+
+        df_dataset['emailColumn'] = emailColumn
 
         return HttpResponse("success")
 
     else:
         return HttpResponse("Error: Something went wrong")
     
-    return HttpResponse('yo')
+
+def sendEmail(request):
+
+    if request.method == "POST":
+        
+        subject = request.POST.get('subject')
+        data = request.POST.get('data')
+
+        print(subject)
+        print(data)
+        
+        return HttpResponse("yo")
+
+    else:
+        return HttpResponse("Error: Something went wrong")

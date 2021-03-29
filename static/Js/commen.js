@@ -14,12 +14,14 @@ let emptyCheck = (id) => {
 
 }
 
-let startLoader = () => {
-    
+let startLoader = (message = 'loader') => {
+    console.log(message + " started");
+    document.getElementById('loader-modal').style.display = 'block';
 }
 
-let endLoader = () => {
-    
+let endLoader = (message = 'loader') => {
+    console.log(message + " ended");
+    document.getElementById('loader-modal').style.display = 'none';
 }
 
 let errorCheck = (value) => {
