@@ -73,3 +73,6 @@ input[type='file']:before {
     font-weight: bold;
     color: #ed4d82;
 }
+textarea{
+    resize: vertical;
+}

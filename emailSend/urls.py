@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path('', views.homePage),
     path('uploadExcel', views.fileUpload),
+    path('setEmailColumn', views.setEmailColumn),
 ]

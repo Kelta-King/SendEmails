@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import pandas as pd
 import os
+import base64
+import json
 
 df_dataset = {
     'df': pd.DataFrame(),
@@ -36,10 +38,18 @@ def fileUpload(request):
 
         ows = OverwriteStorage()
         
+        
         # Overwrite file. So, less disk space will be used
         name = 'theFile.'+str(ext)
-        ows.get_available_name(name)
+        try:
             
+            # If user does not allow access then it will throw an exception and code will stop executing
+            ows.get_available_name(name)
+            # So handling exception
+
+        except Exception as e:
+            print(e)
+
         fl = fs.save(name, excel_file)
 
         try:
@@ -62,3 +72,20 @@ def fileUpload(request):
     
     else:
         return HttpResponse("Something went wrong")
+
+def setEmailColumn(request):
+
+    if request.method == "GET":
+        
+        vals = request.GET.get('vals')
+        vals = base64.b64decode(vals)
+        
+        vals = json.loads(vals)
+        df_dataset['emailColumn'] = vals['column']
+
+        return HttpResponse("success")
+
+    else:
+        return HttpResponse("Error: Something went wrong")
+    
+    return HttpResponse('yo')
