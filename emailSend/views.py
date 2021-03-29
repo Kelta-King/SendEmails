@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import EmailMessage
 import pandas as pd
 import os
 import base64
@@ -47,9 +48,7 @@ def fileUpload(request):
         fs = FileSystemStorage()
         filename, ext = str(excel_file).split('.')
 
-        ows = OverwriteStorage()
-        
-        
+        ows = OverwriteStorage()        
         # Overwrite file. So, less disk space will be used
         name = 'theFile.'+str(ext)
         try:
@@ -113,11 +112,41 @@ def sendEmail(request):
         
         subject = request.POST.get('subject')
         data = request.POST.get('data')
-
-        print(subject)
-        print(data)
         
-        return HttpResponse("yo")
+        attachment_file = request.FILES["file"]
+        fs = FileSystemStorage()
+        filename, ext = str(attachment_file).split('.')
+
+        ows = OverwriteStorage()        
+        # Overwrite file. So, less disk space will be used
+        name = 'attachment.'+str(ext)
+        try:
+            
+            # If user does not allow access then it will throw an exception and code will stop executing
+            ows.get_available_name(name)
+            # So handling exception
+
+        except Exception as e:
+            print(e)
+
+        fl = fs.save(name, attachment_file)
+        
+        df = df_dataset['df']
+        column = df_dataset['emailColumn']
+        print(df_dataset['emailColumn'])
+        emails = df[column].dropna().unique().tolist()
+        
+        email = EmailMessage(
+            subject,
+            data,
+            'kshitijpanchal131@gmail.com',
+            emails,
+            headers={'Message-ID': 'foo'},
+        )
+        email.attach_file(fl)
+        email.send()
+        
+        return HttpResponse("Error: send")
 
     else:
         return HttpResponse("Error: Something went wrong")
